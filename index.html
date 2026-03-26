@@ -1,1 +1,945 @@
-hello
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馬太鞍溪堰塞湖計畫書整體評估</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif; background: #f0f4f8; color: #2c3e50; line-height: 1.8; font-size: 15px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+  .header { background: linear-gradient(135deg, #1a5276, #2e86c1); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+  .header h1 { font-size: 28px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 16px; opacity: 0.85; }
+
+  .summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+  .summary-card { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .summary-card h2 { font-size: 18px; color: #1a5276; margin-bottom: 12px; border-bottom: 2px solid #2e86c1; padding-bottom: 8px; }
+
+  .section-title { font-size: 22px; color: #1a5276; margin: 30px 0 16px; padding-bottom: 8px; border-bottom: 3px solid #2e86c1; }
+
+  .teacher-section { background: white; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; }
+  .teacher-header { padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .teacher-header h3 { font-size: 16px; color: white; }
+  .teacher-header .meta { font-size: 13px; color: rgba(255,255,255,0.85); }
+  .teacher-body { padding: 20px 24px; }
+
+  .bg-a .teacher-header { background: #1a5276; }
+  .bg-b .teacher-header { background: #1f618d; }
+  .bg-c .teacher-header { background: #2471a3; }
+  .bg-d .teacher-header { background: #2874a6; }
+  .bg-e .teacher-header { background: #2e86c1; }
+  .bg-f .teacher-header { background: #2980b9; }
+  .bg-g .teacher-header { background: #3498db; }
+  .bg-h .teacher-header { background: #1a6e50; }
+  .bg-i .teacher-header { background: #1a8e70; }
+  .bg-j .teacher-header { background: #7d3c98; }
+  .bg-k .teacher-header { background: #6c3483; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+  .badge-high { background: #d5f5e3; color: #1e8449; }
+  .badge-mid { background: #fef9e7; color: #b7950b; }
+  .badge-low { background: #fdedec; color: #c0392b; }
+  .badge-na { background: #eee; color: #666; }
+
+  .sub-title { font-size: 15px; font-weight: bold; color: #1a5276; margin: 14px 0 6px; }
+  .sub-title:first-child { margin-top: 0; }
+
+  ul { padding-left: 20px; margin-bottom: 8px; }
+  li { margin-bottom: 3px; font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: #1a5276; color: white; padding: 8px 10px; text-align: left; white-space: nowrap; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: middle; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .text-right { text-align: right; }
+  .text-center { text-align: center; }
+
+  .score-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .score-track { flex: 1; height: 10px; background: #ecf0f1; border-radius: 5px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 5px; }
+  .score-fill.high { background: #27ae60; }
+  .score-fill.mid { background: #f39c12; }
+  .score-fill.low { background: #e74c3c; }
+  .score-label { font-size: 13px; font-weight: bold; min-width: 40px; }
+
+  .deficiency { background: #fef9e7; border-left: 4px solid #f39c12; padding: 10px 14px; margin: 6px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .strength { background: #eafaf1; border-left: 4px solid #27ae60; padding: 10px 14px; margin: 6px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .info { background: #eaf2f8; border-left: 4px solid #2e86c1; padding: 10px 14px; margin: 6px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .alert { background: #fdedec; border-left: 4px solid #e74c3c; padding: 10px 14px; margin: 6px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+
+  .verdict-yes { color: #27ae60; font-weight: bold; }
+  .verdict-partial { color: #f39c12; font-weight: bold; }
+  .verdict-no { color: #e74c3c; font-weight: bold; }
+
+  .tag-ok { background: #d5f5e3; color: #1e8449; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+  .tag-miss { background: #fdedec; color: #c0392b; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+  .tag-na { background: #eee; color: #666; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
+  .final-section { background: white; border-radius: 10px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  .final-section h2 { font-size: 20px; color: #1a5276; margin-bottom: 16px; border-bottom: 2px solid #2e86c1; padding-bottom: 8px; }
+
+  @media print {
+    body { background: white; font-size: 11px; }
+    .container { max-width: 100%; padding: 10px; }
+    .header { padding: 20px; }
+    .teacher-section, .summary-card, .final-section { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>馬太鞍溪堰塞湖服務建議書</h1>
+  <div class="subtitle">計畫書整體狀況評估 — 三年預算 × 高教深耕預算 × 繳交狀況比對</div>
+</div>
+
+<!-- ===== Q1 & Q2 ===== -->
+<div class="summary-row">
+  <div class="summary-card">
+    <h2>Q1：三年預期成果是否明確？</h2>
+    <p><span class="verdict-partial">整體偏弱，多數工項 KPI 表格未填寫。</span></p>
+    <p style="margin-top:8px; font-size:14px;">
+      <strong>張駿暉/戴義欽（工項5+6合併）</strong>里程碑最清晰（85%，E1–E7查核點含具體時間）。多數老師 116-117 年量化 KPI 空白。董東璟、曾志民/林冠瑋、林怡君尚無計畫書。
+    </p>
+  </div>
+  <div class="summary-card">
+    <h2>Q2：能否達到校長「落地」要求？</h2>
+    <p><span class="verdict-partial">部分可落地，但普遍缺「成果交付機制」。</span></p>
+    <p style="margin-top:8px; font-size:14px;">
+      <strong>趙慶宇、郭振民、張駿暉、許家維</strong>有明確工程應用場景。
+      <strong>蔡文柄</strong>偏 AI 工具、<strong>黃尹則/黃柏瑋</strong>偏基礎研究。
+    </p>
+  </div>
+</div>
+
+<!-- ===== 三年計畫預算 ===== -->
+<h2 class="section-title">一、三年計畫預算總覽(補助款與自籌款合併計算)</h2>
+
+<div class="final-section" style="padding:20px;">
+<table>
+  <tr>
+    <th>工項</th>
+    <th>負責人</th>
+    <th class="text-right">115年預算</th>
+    <th class="text-right">116年預算</th>
+    <th class="text-right">117年預算</th>
+    <th class="text-right">三年合計</th>
+    <th class="text-center">計畫書</th>
+  </tr>
+  <tr>
+    <td>總計畫</td><td>游保杉</td>
+    <td class="text-right">$2,000,000</td><td class="text-right">$2,000,000</td><td class="text-right">$2,000,000</td>
+    <td class="text-right"><strong>$6,000,000</strong></td>
+    <td class="text-center"><span class="tag-na">總計畫主持人</span></td>
+  </tr>
+  <tr>
+    <td>工項1</td><td>楊道昌</td>
+    <td class="text-right">$2,500,000</td><td class="text-right">$2,500,000</td><td class="text-right">$2,500,000</td>
+    <td class="text-right"><strong>$7,500,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td>工項2</td><td>郭振民</td>
+    <td class="text-right">$1,500,000</td><td class="text-right">$1,500,000</td><td class="text-right">$1,500,000</td>
+    <td class="text-right"><strong>$4,500,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td rowspan="2">工項3</td><td>趙慶宇、吳建宏</td>
+    <td class="text-right">$751,000</td><td class="text-right">$731,000</td><td class="text-right">$371,000</td>
+    <td class="text-right"><strong>$1,853,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td>曾志民、林冠瑋</td>
+    <td class="text-right" colspan="3" style="color:#999;">未填寫</td>
+    <td class="text-right" style="color:#999;">—</td>
+    <td class="text-center"><span class="tag-miss">未繳</span></td>
+  </tr>
+  <tr>
+    <td>工項4</td><td>董東璟</td>
+    <td class="text-right" colspan="3" style="color:#999;">未填寫</td>
+    <td class="text-right" style="color:#999;">—</td>
+    <td class="text-center"><span class="tag-miss">未繳</span></td>
+  </tr>
+ 
+  <tr>
+    <td>工項5+6</td><td>張駿暉、戴義欽</td>
+    <td class="text-right">$6,100,000</td><td class="text-right">$4,600,000</td><td class="text-right">$4,000,000</td>
+    <td class="text-right"><strong>$14,700,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td>工項7</td><td>蔡文柄</td>
+    <td class="text-right">$2,500,000</td><td class="text-right">$2,000,000</td><td class="text-right">$2,000,000</td>
+    <td class="text-right"><strong>$6,500,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td>工項11</td><td>林怡君</td>
+    <td class="text-right" colspan="3" style="color:#999;">未填寫</td>
+    <td class="text-right" style="color:#999;">—</td>
+    <td class="text-center"><span class="tag-miss">未繳</span></td>
+  </tr>
+  <tr>
+    <td>工項12</td><td>許家維</td>
+    <td class="text-right">$1,650,000</td><td class="text-right">$1,350,000</td><td class="text-right">$1,050,000</td>
+    <td class="text-right"><strong>$4,050,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr>
+    <td>工項13</td><td>黃柏瑋、黃尹則</td>
+    <td class="text-right">$2,400,000</td><td class="text-right">$2,000,000</td><td class="text-right">$1,700,000</td>
+    <td class="text-right"><strong>$6,100,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span></td>
+  </tr>
+  <tr style="background:#eaf2f8; font-weight:bold;">
+    <td colspan="2">已填合計</td>
+    <td class="text-right">$19,401,000</td><td class="text-right">$16,681,000</td><td class="text-right">$15,121,000</td>
+    <td class="text-right">$51,203,000</td>
+    <td></td>
+  </tr>
+</table>
+</div>
+
+<!-- ===== 高教深耕預算 ===== -->
+<h2 class="section-title">二、高教深耕預算 × 資料夾繳交比對</h2>
+
+<div class="final-section" style="padding:20px;">
+<p style="color:#555;font-size:14px;margin-bottom:12px;">※ 四大項目說明：<strong>人事費</strong>（助理費、薪資補助）｜<strong>差旅費</strong>（國內外出差、田野調查）｜<strong>業務費</strong>（材料、委辦、雜支）｜<strong>資本門</strong>（設備購置）</p>
+<table>
+  <tr>
+    <th>老師</th>
+    <th class="text-right">人事費</th>
+    <th class="text-right">差旅費</th>
+    <th class="text-right">業務費</th>
+    <th class="text-right">資本門</th>
+    <th class="text-right">總計</th>
+    <th class="text-center">高教深耕<br>xls 繳交</th>
+  </tr>
+  <!-- 醫學組 -->
+  <tr style="background:#eaf2f8;">
+    <td><strong>醫學組</strong></td>
+    <td class="text-right">$1,320,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right">$6,980,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right"><strong>$8,300,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">醫學 JLW NEW.xls</span></td>
+  </tr>
+  <!-- $0 teachers -->
+  <tr>
+    <td>游保杉</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>羅偉誠</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>吳建宏</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <!-- 趙慶宇 -->
+  <tr>
+    <td>趙慶宇</td>
+    <td class="text-right">—</td>
+    <td class="text-right">—</td>
+    <td class="text-right">$600,000</td>
+    <td class="text-right">$400,000</td>
+    <td class="text-right"><strong>$1,000,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">趙慶宇_工項一.xls</span></td>
+  </tr>
+  <!-- 許家維 -->
+  <tr>
+    <td>許家維</td>
+    <td class="text-right">$414,000</td>
+    <td class="text-right">$200,000</td>
+    <td class="text-right">$710,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right"><strong>$1,324,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">工項12_許家維_Yr1.xls</span></td>
+  </tr>
+  <!-- $0 teachers -->
+  <tr>
+    <td>郭振民</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>李家興</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <!-- 黃尹則 -->
+  <tr>
+    <td>黃尹則</td>
+    <td class="text-right">$120,000</td>
+    <td class="text-right">$120,000</td>
+    <td class="text-right">$1,192,000</td>
+    <td class="text-right">$150,000</td>
+    <td class="text-right"><strong>$1,582,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">黃尹則.xls</span></td>
+  </tr>
+  <!-- 黃柏瑋 -->
+  <tr>
+    <td>黃柏瑋</td>
+    <td class="text-right">$300,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right">$100,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right"><strong>$400,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">黃柏瑋.xls</span></td>
+  </tr>
+  <!-- 張駿暉 -->
+  <tr>
+    <td>張駿暉</td>
+    <td class="text-right">$800,000</td>
+    <td class="text-right">$250,000</td>
+    <td class="text-right">$350,000</td>
+    <td class="text-right">$500,000</td>
+    <td class="text-right"><strong>$1,900,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">張駿暉.xls</span></td>
+  </tr>
+  <!-- 戴義欽 -->
+  <tr>
+    <td>戴義欽</td>
+    <td class="text-right">$140,000</td>
+    <td class="text-right">—</td>
+    <td class="text-right">$660,000</td>
+    <td class="text-right">$1,000,000</td>
+    <td class="text-right"><strong>$1,800,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">戴義欽.xls</span></td>
+  </tr>
+  <!-- $0 teachers -->
+  <tr>
+    <td>陳憲宗</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>楊道昌</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>董東璟</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>曾志民</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>林怡君</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>林冠瑋</td>
+    <td colspan="4" class="text-center" style="color:#999;">$0（無編列）</td>
+    <td class="text-right">$0</td>
+    <td class="text-center"><span class="tag-na">無需繳</span></td>
+  </tr>
+  <!-- 蔡文柄 -->
+  <tr>
+    <td>蔡文柄</td>
+    <td class="text-right">$300,000</td>
+    <td class="text-right">$100,000</td>
+    <td class="text-right">$750,000</td>
+    <td class="text-right">$400,000</td>
+    <td class="text-right"><strong>$1,550,000</strong></td>
+    <td class="text-center"><span class="tag-ok">已繳</span><br><span style="font-size:11px;color:#666;">蔡文柄.xls</span></td>
+  </tr>
+  <!-- 合計 -->
+  <tr style="background:#eaf2f8; font-weight:bold;">
+    <td>合計（有編列者）</td>
+    <td class="text-right">$3,394,000</td>
+    <td class="text-right">$670,000</td>
+    <td class="text-right">$11,342,000</td>
+    <td class="text-right">$2,450,000</td>
+    <td class="text-right"><strong>$17,856,000</strong></td>
+    <td></td>
+  </tr>
+</table>
+</div>
+
+<!-- ===== 繳交缺漏彙整 ===== -->
+<h2 class="section-title">三、繳交缺漏彙整</h2>
+
+<div class="final-section" style="padding:20px;">
+
+<div class="sub-title">A. 三年計畫書（docx）缺漏</div>
+<table>
+  <tr><th>老師</th><th>工項</th><th>狀態</th><th>說明</th></tr>
+  <tr><td>游保杉</td><td>總計畫</td><td><span class="tag-na">不需要</span></td><td>總計畫主持人，不需獨立計畫書</td></tr>
+  <tr><td>楊道昌</td><td>工項1</td><td><span class="tag-ok">已補繳</span></td><td>工作項目一(V2)-楊道昌.docx</td></tr>
+  <tr><td>郭振民</td><td>工項2</td><td><span class="tag-ok">已繳</span></td><td>工程會補助案格式_工項2_v2-郭振民.docx</td></tr>
+  <tr><td>趙慶宇/吳建宏</td><td>工項3</td><td><span class="tag-ok">已繳</span></td><td>【工項一子工項】計畫書初稿-趙慶宇.docx</td></tr>
+  <tr><td style="color:#c0392b;font-weight:bold;">曾志民/林冠瑋</td><td>工項3</td><td><span class="tag-miss">未繳</span></td><td>資料夾無曾志民計畫書 docx</td></tr>
+  <tr><td style="color:#c0392b;font-weight:bold;">董東璟</td><td>工項4</td><td><span class="tag-miss">未繳</span></td><td>資料夾無董東璟計畫書 docx</td></tr>
+  <tr><td>張駿暉/戴義欽</td><td>工項5+6</td><td><span class="tag-ok">已繳（合併）</span></td><td>工程會補助案格式_工項6_張老師_yct_0325-1a合併戴老師.docx</td></tr>
+  <tr><td>蔡文柄</td><td>工項7</td><td><span class="tag-ok">已繳</span></td><td>工項6_AI_蔡文柄_rough version_0309.docx</td></tr>
+  <tr><td style="color:#c0392b;font-weight:bold;">林怡君</td><td>工項7</td><td><span class="tag-miss">未繳</span></td><td>資料夾無林怡君計畫書 docx</td></tr>
+  <tr><td>許家維</td><td>工項8</td><td><span class="tag-ok">已繳</span></td><td>工程會補助案格式_工項12-許家維.docx</td></tr>
+  <tr><td>黃柏瑋/黃尹則</td><td>工項9</td><td><span class="tag-ok">已繳</span></td><td>[工項13]以土壤環境...研究.docx</td></tr>
+  <tr><td style="color:#c0392b;font-weight:bold;">王竣令/蔡進相</td><td>醫學組</td><td><span class="tag-miss">未繳</span></td><td>資料夾無醫學組計畫書 docx</td></tr>
+
+</table>
+
+<div class="alert" style="margin-top:16px;"><strong>三年計畫書未繳 3 位：</strong>曾志民/林冠瑋（工項3）、董東璟（工項4）、林怡君（工項11）｜ 張駿暉/戴義欽已合併繳交（0325版）</div>
+
+<div class="sub-title" style="margin-top:24px;">B. 高教深耕經費表（xls）缺漏</div>
+
+<p style="font-size:14px; margin-bottom:8px;">資料夾「高教深耕預算」中共 8 個 xls 檔案(已經根據高教深耕格式)，比對如下：</p>
+
+<table>
+  <tr><th>老師</th><th>高教深耕預算金額</th><th>xls 檔案</th><th>狀態</th></tr>
+  <tr><td>醫學組（JLW）</td><td>$8,300,000</td><td>經費細項分配表_醫學 JLW NEW.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>趙慶宇</td><td>$1,000,000</td><td>經費細項分配表_趙慶宇_工項一.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>許家維</td><td>$1,324,000</td><td>經費細項分配表_工項12_許家維_Yr1.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>黃尹則</td><td>$1,582,000</td><td>經費細項分配表_1_黃尹則.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>黃柏瑋</td><td>$400,000</td><td>經費細項分配表_黃柏瑋.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>張駿暉</td><td>$1,900,000</td><td>經費細項分配表_張駿暉.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>戴義欽</td><td>$1,800,000</td><td>經費細項分配表_1_yct_rev-戴義欽.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr><td>蔡文柄</td><td>$1,550,000</td><td>工項7_AI_經費細項分配表_1-蔡文柄.xls</td><td><span class="tag-ok">已繳</span></td></tr>
+  <tr >
+    <td><strong>郭振民</strong></td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>游保杉</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>羅偉誠</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>吳建宏</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>李家興</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>陳憲宗</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>楊道昌</td><td>$0</td><td>—</td><td><span class="tag-na">無需繳</span></td>
+  </tr>
+  <tr>
+    <td>董東璟</td><td>$0</td><td>—</td><td><span class="tag-miss">無繳交</span></td>
+  </tr>
+  <tr>
+    <td>曾志民</td><td>$0</td><td>—</td><td><span class="tag-miss">無繳交</span></td>
+  </tr>
+  <tr>
+    <td>林怡君</td><td>$0</td><td>—</td><td><span class="tag-miss">無繳交</span></td>
+  </tr>
+  <tr>
+    <td>林冠瑋</td><td>$0</td><td>—</td><td><span class="tag-miss">無繳交</span></td>
+  </tr>
+</table>
+
+<div class="alert" style="margin-top:16px;"><strong>尚未繳交高教深耕預算的老師 3 位：</strong>曾志民/林冠瑋、董東璟、林怡君</div>
+
+</div>
+
+<!-- ===== 各工項詳評 ===== -->
+<h2 class="section-title">四、各工項詳細評估</h2>
+
+<!-- 楊道昌 工項1 -->
+<div class="teacher-section bg-a">
+  <div class="teacher-header">
+    <div>
+      <h3>楊道昌 — 工項1：堰塞湖潰決風險管理與快速情境推演系統平台</h3>
+      <div class="meta">三年預算 $7,500,000 ｜ 高教深耕 $0</div>
+    </div>
+    <div><span class="badge badge-high">落地性：高</span> <span class="badge badge-high">成果明確 75%</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">75%</span><div class="score-track"><div class="score-fill high" style="width:75%"></div></div></div>
+
+    <div class="info"><strong>整合型系統平台</strong>：串聯工項2（郭振民）、工項3（趙慶宇）、工項6（張駿暉）、工項7（蔡文柄）五大模組，形成端到端推演鏈。查核點 C1–C11 均有具體內容，治理落地方向明確。</div>
+
+    <div class="sub-title">計畫目標（五大主軸）</div>
+    <table>
+      <tr><th>主軸</th><th>內容</th></tr>
+      <tr><td>平台建置</td><td>建置「堰塞湖潰決風險管理與快速情境推演系統平台」，整合資料、情境設定、推演運算與成果展示，建立端到端推演鏈</td></tr>
+      <tr><td>情境成果</td><td>分年完成短期(3–5年)、中期(5–10年)與氣候變遷情境之土砂運移與淹水範圍成果</td></tr>
+      <tr><td>治理決策</td><td>將情境結果轉為工程可用資訊，支援疏濬、河堤加強、雨水工與瓶頸整治等方案規劃、優先序與效益比較</td></tr>
+      <tr><td>跨單位共享</td><td>提供跨權責單位共同檢視、版本追溯與報告輸出能力，同一套情境、同一版本成果</td></tr>
+      <tr><td>可移植性</td><td>彙整跨流域導入指引，平台架構模組化，可複製到其他流域，形成長期治理效益</td></tr>
+    </table>
+
+    <div class="sub-title">實施策略（五模組串聯推演鏈）</div>
+    <table>
+      <tr><th>模組</th><th>功能</th></tr>
+      <tr><td>① 氣象水文資料融合</td><td>整合雷達/預報/站網，建立代表雨型與極端雨型，產出多情境入流歷線 Q(t) 與不確定性帶</td></tr>
+      <tr><td>② 不安定土砂來源與逕流量化</td><td>估算崩塌/溝蝕供砂量、粒徑與輸砂時序，發展堰塞湖形成與潰壩分析模型，提供潰壩後洪水歷線</td></tr>
+      <tr><td>③ 高含砂濁水侵淤運移模型</td><td>模擬輸砂與沖淤，更新斷面與糙率，輸出侵淤熱點、河床抬升、通洪瓶頸與漫溢風險</td></tr>
+      <tr><td>④ 高濃度漫地流水砂淹水模式</td><td>以溢流量與地形推估淹水範圍、深度、流速與含砂濃度，必要時納入堆積回饋</td></tr>
+      <tr><td>⑤ Hybrid AI-physics 智慧推演</td><td>以 AI 代理模型嵌入物理數值成果，物理約束式學習加速多情境批次試算，支援近即時預警</td></tr>
+    </table>
+
+    <div class="sub-title">年度里程碑與查核點</div>
+    <table>
+      <tr><th>年度</th><th>查核點</th><th>主要成果</th><th>明確度</th></tr>
+      <tr><td>115年<br>（第1年）</td><td>C1<br>C2</td><td>完成基礎平台架構規劃與建置<br>五模組初步成果串接（降雨→入流→供砂→侵淤→淹水）</td><td class="verdict-yes">明確</td></tr>
+      <tr><td>116年<br>（第2年）</td><td>C4<br>C6</td><td>完成短期(3–5年)情境庫與推演成果集（可追溯、可比較）<br>完成短期決策輔助資訊成果產品化（成果圖資集）</td><td class="verdict-yes">明確</td></tr>
+      <tr><td>117年<br>（第3年）</td><td>C8<br>C9<br>C10<br>C11</td><td>完成中期(5–10年)情境分析成果展示<br>完成氣候變遷情境成果（熱點轉移＋調適建議）<br>整合短期/中期/氣候變遷成果展示<br>彙編跨流域導入指引文件</td><td class="verdict-partial">部分明確（KPI量化指標待補）</td></tr>
+    </table>
+
+    <div class="sub-title">預期效益</div>
+    <div class="strength"><strong>整合推演鏈</strong>：全計畫唯一整合型平台，將分散於各工項的成果串成可操作的決策支援工具</div>
+    <div class="strength"><strong>縮短應變時間</strong>：多情境批次推演 + AI 加速，可近即時產製不同降雨情境下的侵淤/淹水預測</div>
+    <div class="strength"><strong>跨單位協作效率</strong>：同一套情境、同版本成果，避免各單位因假設不一致造成決策落差</div>
+    <div class="strength"><strong>可移植至其他流域</strong>：跨流域導入指引降低後續複製成本，提升長期效益</div>
+
+    <div class="sub-title">風險評估</div>
+    <div class="deficiency">計畫書內未獨立列出風險評估章節，以下為評估風險：</div>
+    <div class="deficiency"><strong>整合協調風險</strong>：平台依賴工項2、3、6、7的模型成果，若各工項進度落後，推演鏈將無法完整串接</div>
+    <div class="deficiency"><strong>資料取得風險</strong>：跨權責單位資料共享涉及行政授權，可能面臨格式不相容或資料授權問題</div>
+    <div class="deficiency"><strong>KPI量化不足</strong>：查核點內容有，但精度要求（如河床高程預測誤差標準）未明確定義</div>
+
+    <div class="sub-title">工程可落地成果（具體落地建議）</div>
+    <div class="strength"><strong>侵淤熱點分布圖</strong>：直接用於疏濬位置規劃、清淤量體估算與優先序排序</div>
+    <div class="strength"><strong>通洪瓶頸辨識</strong>：標定河道斷面不足段，支援河堤/護岸補強與瓶頸整治方案</div>
+    <div class="strength"><strong>淹水範圍/深度/流速圖資</strong>：可直接供疏散規模評估、防洪設施配置與雨水工設計</div>
+    <div class="strength"><strong>工程方案效益比較</strong>：以疏濬量、堤防加高、雨水工配置為控制變數進行方案對照，輸出效益比較供決策引用</div>
+    <div class="strength"><strong>跨流域導入指引（第3年）</strong>：標準化作業流程文件，可複製至其他類似流域，擴大落地範疇</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">各模組精度要求（如推演誤差容許值、AI 模型預測精度）未量化定義</div>
+    <div class="deficiency">平台部署方式（Web/雲端/桌面？）與維運機制未說明，跨單位共享的技術架構細節不足</div>
+    <div class="deficiency">預期效益與風險評估章節未填寫，第116、117年度 KPI 表格待補</div>
+    <div class="deficiency">高教深耕 $0，無配套助理人力，推演鏈整合工作量龐大，執行能量需確認</div>
+  </div>
+</div>
+
+<!-- 郭振民 工項2 -->
+<div class="teacher-section bg-b">
+  <div class="teacher-header">
+    <div>
+      <h3>郭振民 — 工項2：氣象水文資料融合與快速情境推演</h3>
+      <div class="meta">三年預算 $4,500,000 ｜ 高教深耕 $0</div>
+    </div>
+    <div><span class="badge badge-mid">落地性：中高</span> <span class="badge badge-mid">成果明確 50%</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">50%</span><div class="score-track"><div class="score-fill mid" style="width:50%"></div></div></div>
+
+    <div class="strength">快速情境推演機制：縮短災害應變研判時間；為工項6、7提供邊界條件</div>
+    <div class="deficiency">KPI表格、查核點全部空白，經費細項未填</div>
+    
+    <div class="sub-title">年度里程碑</div>
+    <table>
+      <tbody><tr><th>年度</th><th>主要成果</th><th>明確度</th></tr>
+      <tr><td>115年</td><td>IDF曲線、高解析度降雨資料庫、代表雨型建構</td><td class="verdict-partial">技術方法明確，KPI空白</td></tr>
+      <tr><td>116年</td><td>流域洪氾淹水及土砂沖淤模式</td><td class="verdict-no">無年度分解成果</td></tr>
+      <tr><td>117年</td><td>快速情境推演系統、批次運算自動化</td><td class="verdict-no">無年度分解成果</td></tr>
+    </tbody></table>
+
+    <div class="sub-title">工程可落地成果</div>
+    <div class="strength"><strong>快速情境推演機制</strong>：可快速產製不同重現期與情境組合下之入流歷線與峰值流量，縮短災害應變研判時間</div>
+    <div class="strength"><strong>邊界條件供應</strong>：為工項6（張駿暉）、工項7（蔡文柄）提供標準化輸入</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">KPI 表格完全空白，無任何量化指標填寫</div>
+    <div class="deficiency">查核點內容表空白，預定完成時間未填</div>
+    <div class="deficiency">缺乏防災應變指引、工程設計規範等實務產出</div>
+    <div class="deficiency">無實務驗證計畫，模型適用限制未說明</div>
+  </div>
+</div>
+
+<!-- 趙慶宇/吳建宏 + 曾志民/林冠瑋 工項3 -->
+<div class="teacher-section bg-c">
+  <div class="teacher-header">
+    <div>
+      <h3>趙慶宇/吳建宏、曾志民/林冠瑋 — 工項3：不安定土砂來源量化分析</h3>
+      <div class="meta">趙慶宇三年預算 $1,853,000 ｜ 曾志民預算未填 ｜ 高教深耕（趙）$1,000,000</div>
+    </div>
+    <div><span class="badge badge-high">落地性：高</span> <span class="badge badge-mid">成果明確 65%</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">65%</span><div class="score-track"><div class="score-fill mid" style="width:65%"></div></div></div>
+
+    <div class="strength"><strong>工程性能數據庫</strong>：土方品質分類、堤防填料配方、資源循環應用</div>
+    <div class="deficiency">KPI 量化效益表空白</div>
+    <div class="alert"><strong>曾志民/林冠瑋計畫書未繳、預算未填</strong></div>
+    
+    <div class="sub-title">年度里程碑</div>
+    <table>
+      <tbody><tr><th>年度</th><th>主要成果</th><th>明確度</th></tr>
+      <tr><td>115年</td><td>完成系統性取樣 → 材料指標資料庫、各配比夯實特性、USCS分類</td><td class="verdict-yes">明確</td></tr>
+      <tr><td>116年</td><td>飽和滲透係數、SWCC、三軸/動力三軸試驗 → 抗剪強度參數</td><td class="verdict-yes">明確</td></tr>
+      <tr><td>117年</td><td>工程性能數據庫建立、試體尺寸效應評估、SCI論文 ≥1篇</td><td class="verdict-partial">部分明確</td></tr>
+    </tbody></table>
+
+    <div class="sub-title">工程可落地成果</div>
+    <div class="strength"><strong>工程性能數據庫</strong>：直接供主管機關作為土方品質分類、堤防填料規格制定與去化決策之依據</div>
+    <div class="strength"><strong>堤防填料配方</strong>：砂淤混合料降低透水性並維持力學強度，直接解決花蓮溪「就地取材高透水性」困境</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">KPI 量化效益表完全空白，116-117年缺具體數值目標</div>
+    <div class="deficiency">主軸三至五（InSAR、河道堆積模擬、清水歷線）的工程應用路徑不清晰</div>
+    <div class="deficiency">成果交付、驗收與技術推廣機制未建立</div>
+  </div>
+</div>
+
+<!-- 董東璟 工項4 -->
+<div class="teacher-section bg-d">
+  <div class="teacher-header">
+    <div>
+      <h3>董東璟 — 工項4：河道泥沙濃度自動化監測</h3>
+      <div class="meta">三年預算未填 ｜ 高教深耕 $0</div>
+    </div>
+    <div><span class="badge badge-na">待確認（預期高）</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="strength">自動化監測設備為<strong>直接可落地工程產出</strong></div>
+    <div class="alert"><strong>計畫書未繳、預算未填</strong></div>
+  </div>
+</div>
+
+<!-- 張駿暉/戴義欽 工項5+6 合併 -->
+<div class="teacher-section bg-e">
+  <div class="teacher-header">
+    <div>
+      <h3>張駿暉／戴義欽 — 工項5+6：高含砂濁水土砂運移 × 漫地流水砂數值模式</h3>
+      <div class="meta">三年預算 $14,700,000（115年$6,100,000 ｜ 116年$4,600,000 ｜ 117年$4,000,000）｜ 高教深耕 張駿暉$1,900,000 ＋ 戴義欽$1,800,000</div>
+    </div>
+    <div><span class="badge badge-high">落地性：高</span> <span class="badge badge-high">成果明確 85%</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">85%</span><div class="score-track"><div class="score-fill high" style="width:85%"></div></div></div>
+
+    <div class="info"><strong>計畫書已合併繳交</strong>（工程會補助案格式_工項6_張老師_yct_0325-1a合併戴老師.docx）。整合高含砂濁水土砂運移侵淤模式（戴義欽）＋ 二維漫地流水理輸砂模式（張駿暉），查核點 E1–E7 含具體時間與內容，三年推進策略明確。</div>
+
+    <div class="sub-title">計畫目標</div>
+    <p style="margin:6px 16px;">建構涵蓋洪水與輸砂之完整數值模式，整合「高含砂濁水土砂運移侵淤模式」與「二維漫地流水理輸砂模式」，強化堰塞湖潰壩事件後下游淹水預測準確度；導入 GPU 加速縮短模擬時程，建立標籤化訓練資料庫，作為堤防、護岸、橋梁等水利設施失效風險評估及子計畫 AI 模型訓練依據。</p>
+
+    <div class="sub-title">三年推進策略</div>
+    <table>
+      <tr><th>年度</th><th>重點任務</th><th>範圍</th></tr>
+      <tr><td><strong>115年</strong><br>模式建構</td><td>整合高解析地形、歷史水文與泥砂監測資料，建構高含砂濁水水理與土砂運移二維水砂耦合模式，完成參數校正與驗證；模擬未來 3～5 年河床演變與淹水潛勢圖</td><td>馬太鞍溪流域（示範場域）</td></tr>
+      <tr><td><strong>116年</strong><br>尺度拓展</td><td>擴展至花蓮溪主流段（馬太鞍大橋至出海口），納入多支流匯流邊界；分析支流泥砂通量對主流沖淤影響；模擬 5～10 年中期情境，評估結構物基礎沖刷風險</td><td>花蓮溪主流段全段</td></tr>
+      <tr><td><strong>117年</strong><br>效能提升與決策整合</td><td>數值核心重構為 GPU 平行運算架構，建立批次推演能力；建構標籤化訓練資料庫；與花蓮溪治理計畫進行方案比較，模擬 10～20 年長期河床沖淤</td><td>花蓮溪主流至河口</td></tr>
+    </table>
+
+    <div class="sub-title">查核點（E1–E7，具體時間均已填寫）</div>
+    <table>
+      <tr><th>查核點</th><th>預定完成</th><th>查核點內容</th></tr>
+      <tr><td>E1</td><td>115/12</td><td>高含砂濁水土砂運移侵淤模式、漫地流水理與輸砂模式（建置完成）</td></tr>
+      <tr><td>E2</td><td>115/12</td><td>潰壩流量歷線估算模式（可行性探討）</td></tr>
+      <tr><td>E3</td><td>116/12</td><td>高含砂濁水土砂運移侵淤模式、漫地流水理與輸砂模式（案例探討，花蓮溪全段）</td></tr>
+      <tr><td>E4</td><td>116/12</td><td>二維潰壩流量歷線估算模式（建置完成）</td></tr>
+      <tr><td>E5</td><td>117/06</td><td>潰壩流量歷線＋土砂運移侵淤＋漫地流水理輸砂三模式整合</td></tr>
+      <tr><td>E6</td><td>117/09</td><td>模式演算核心 CPU→GPU 轉換完成</td></tr>
+      <tr><td>E7</td><td>117/12</td><td>未來馬太鞍溪短中長期沖淤情形整合評估報告產出</td></tr>
+    </table>
+
+    <div class="sub-title">預期效益</div>
+    <div class="strength"><strong>河床沖淤變化潛勢圖（3–5年、5–10年、10–20年）</strong>：直接供清淤規劃、堤防補強優先順序評估使用</div>
+    <div class="strength"><strong>高含砂濁水數值模式</strong>：節省商用軟體授權費約 50～150 萬元/年，具備自主維運能力</div>
+    <div class="strength"><strong>潰壩流量歷線估算</strong>：提供標準化輸入至工項1（楊道昌）整合平台與工項7（蔡文柄）AI 模型</div>
+    <div class="strength"><strong>標籤化訓練資料庫</strong>：第3年完成，供 Hybrid AI-physics 模型訓練，提升多情境批次推演效率</div>
+
+    <div class="sub-title">風險評估與因應對策</div>
+    <table>
+      <tr><th>風險</th><th>說明</th><th>因應對策</th></tr>
+      <tr><td>技術研發</td><td>高濃度含砂水流（非牛頓流體）計算不收斂或參數校驗困難</td><td>採用多重數值格式交互驗證，針對馬太鞍溪粒徑分布進行參數靈敏度分析</td></tr>
+      <tr><td>資料品質</td><td>山區水文觀測因極端氣候產生缺漏，邊界條件不穩定</td><td>多源資料融合（氣象局雨量＋衛星影像＋UAV實測地形），建立動態更新資料庫</td></tr>
+      <tr><td>行政環境</td><td>商用軟體授權政策變動</td><td>核心模式採自主開發或開源架構，完全排除對國外高單價商用軟體依賴</td></tr>
+    </table>
+
+    <div class="sub-title">工程可落地成果（具體落地建議）</div>
+    <div class="strength"><strong>河床沖淤潛勢圖</strong>：3～5年、5～10年、10～20年三階段，供清淤規劃與出水高評估使用</div>
+    <div class="strength"><strong>結構物失效風險評估</strong>：堤防、護岸、橋梁基礎沖刷風險分析 → 補強優先順序排定</div>
+    <div class="strength"><strong>淹水潛勢圖</strong>：含砂濃度場與沖淤變化，可直接供疏散規模評估（參考：樺加沙颱風期間協助疏散規模由 600 人提升至 8,000 人）</div>
+    <div class="strength"><strong>GPU 批次推演系統</strong>：大量情境快速試算，支援工項1（楊道昌）決策平台的近即時應用</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">模式精度要求未定義（河床高程預測誤差標準？沖淤量容許誤差？）</div>
+    <div class="deficiency">GPU 加速倍數目標、訓練資料庫筆數規模未量化</div>
+    <div class="deficiency">成果部署方式（Web/桌面/API？）與接收單位未明確說明</div>
+  </div>
+</div>
+
+<!-- 蔡文柄 工項7 -->
+<div class="teacher-section bg-g">
+  <div class="teacher-header">
+    <div>
+      <h3>蔡文柄 — 工項7：物理知識導引之水砂淤灌智慧推演</h3>
+      <div class="meta">三年預算 $6,500,000 ｜ 高教深耕 $1,550,000</div>
+    </div>
+    <div><span class="badge badge-mid">落地性：中</span> <span class="badge badge-mid">成果明確 55%</span></div>
+  </div>
+  <div class="teacher-body">
+     <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">55%</span><div class="score-track"><div class="score-fill mid" style="width:55%"></div></div></div>
+
+    <div class="strength">多情境快速推演輔助工程治理情境比較</div>
+    <div class="deficiency">產出均標「1式」無具體規格；偏研究工具開發，依賴其他工項</div>
+    
+    <div class="sub-title">年度里程碑</div>
+    <table>
+      <tbody><tr><th>年度</th><th>主要成果</th><th>明確度</th></tr>
+      <tr><td>115年</td><td>模擬資料整理流程 1 式、基本 AI 模型 1 式</td><td class="verdict-partial">有產出但規格模糊</td></tr>
+      <tr><td>116年</td><td>資料集建置 1 式、AI 模型訓練測試、多情境輸入產生方式</td><td class="verdict-partial">有產出但規格模糊</td></tr>
+      <tr><td>117年</td><td>多情境推演應用 1 式、情境分析方法 1 式</td><td class="verdict-partial">有產出但規格模糊</td></tr>
+    </tbody></table>
+
+    <div class="sub-title">工程可落地成果</div>
+    <div class="strength"><strong>多情境快速推演</strong>：可輔助工程治理方案的情境比較分析</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">產出均標「1式」但無具體規格（AI模型精度要求？資料集筆數？）</div>
+    <div class="deficiency">本質為研究工具開發，非直接工程設計產出</div>
+    <div class="deficiency">無用戶介面、API、系統集成計畫</div>
+    <div class="deficiency">依賴其他工項的物理模型數據，無法獨立應用</div>
+  </div>
+</div>
+
+<!-- 林怡君 工項11 -->
+<div class="teacher-section bg-h">
+  <div class="teacher-header">
+    <div>
+      <h3>林怡君 — 工項11：大學社會責任導向之在地協作治理</h3>
+      <div class="meta">三年預算未填 ｜ 高教深耕 $0</div>
+    </div>
+    <div><span class="badge badge-na">待確認</span></div>
+  </div>
+  <div class="teacher-body">
+    <div class="strength">社區溝通與在地協作是「落地」的關鍵環節</div>
+    <div class="alert"><strong>計畫書未繳、預算未填</strong></div>
+  </div>
+</div>
+
+<!-- 許家維 工項12 -->
+<div class="teacher-section bg-i">
+  <div class="teacher-header">
+    <div>
+      <h3>許家維 — 工項12：基於人流分析之韌性疏散決策支援</h3>
+      <div class="meta">三年預算 $4,050,000 ｜ 高教深耕 $1,324,000</div>
+    </div>
+    <div><span class="badge badge-high">落地性：中高</span> <span class="badge badge-mid">成果明確 60%</span></div>
+  </div>
+  <div class="teacher-body">
+     <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">60%</span><div class="score-track"><div class="score-fill mid" style="width:60%"></div></div></div>
+
+    <div class="strength">決策支援儀表板、社區防災指引地圖、路網關鍵度評分</div>
+    <div class="deficiency">KPI 空白、電信信令取得未明確、維運機制不清</div>
+    
+    <div class="sub-title">年度里程碑</div>
+    <table>
+      <tbody><tr><th>年度</th><th>查核點</th><th>主要成果</th></tr>
+      <tr><td>115年</td><td>A1-A3, B1</td><td>人口分布矩陣、移動行為參數、人口推估模型、數位路網模型</td></tr>
+      <tr><td>116年</td><td>B2-B4</td><td>情境脆弱度分析、中斷風險模擬、路網關鍵瓶頸地圖</td></tr>
+      <tr><td>117年</td><td>C1-C3</td><td>多情境疏散策略指引、決策儀表板原型、社區防災指引地圖</td></tr>
+    </tbody></table>
+
+    <div class="sub-title">工程可落地成果</div>
+    <div class="strength"><strong>決策支援儀表板</strong>：供應變中心即時動態監控，含替代路線與資源分配建議</div>
+    <div class="strength"><strong>社區防災指引地圖</strong>：易讀性地圖可直接發放給社區使用</div>
+    <div class="strength"><strong>路網關鍵度評分</strong>：指認瓶頸路段，支援路網補強優先級決策</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">KPI 量化表格全部空白，無具體數值目標</div>
+    <div class="deficiency">電信信令數據取得方式與合作協議未明確</div>
+    <div class="deficiency">計畫結束後的工具維運機制不清楚</div>
+    <div class="deficiency">無與實際應變單位的試運行計畫</div>
+  </div>
+</div>
+
+<!-- 黃柏瑋/黃尹則 工項13 -->
+<div class="teacher-section bg-j">
+  <div class="teacher-header">
+    <div>
+      <h3>黃柏瑋、黃尹則 — 工項13：地下水土壤微生物與公衛</h3>
+      <div class="meta">三年預算 $6,100,000 ｜ 高教深耕（黃尹則）$1,582,000</div>
+    </div>
+    <div><span class="badge badge-low">落地性：低</span> <span class="badge badge-low">成果明確 40%</span></div>
+  </div>
+  <div class="teacher-body">
+     <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">40%</span><div class="score-track"><div class="score-fill low" style="width:40%"></div></div></div>
+
+    <div class="strength">農地復育科學依據：土壤微生物基線資料庫</div>
+    <div class="deficiency">116-117年預期成果全空白；基礎研究短期無法工程落地</div>
+    <div class="sub-title">三年預期成果明確度</div>
+    <div class="score-bar"><span class="score-label">40%</span><div class="score-track"><div class="score-fill low" style="width:40%"></div></div></div>
+
+    <div class="sub-title">年度里程碑</div>
+    <table>
+      <tbody><tr><th>年度</th><th>主要成果</th><th>明確度</th></tr>
+      <tr><td>115年</td><td>94 樣本分析、25 樣本定序（≥10Gb）、50 MAGs、30,000 功能基因</td><td class="verdict-yes">明確（有具體數字）</td></tr>
+      <tr><td>116年</td><td> 採樣、DNA萃取與Nanopore定序、土壤性質分析</td><td class="verdict-yes">已填寫</td></tr>
+      <tr><td>117年</td><td> 生物資訊分析與跨域整合</td><td class="verdict-yes">已填寫</td></tr>
+    </tbody></table>
+
+    <div class="sub-title">工程可落地成果</div>
+    <div class="strength"><strong>農地復育科學依據</strong>：為農業部提供土壤微生物基線資料與復育評估指標</div>
+
+    <div class="sub-title">主要缺陷</div>
+    <div class="deficiency">本質為基礎科學研究（總體基因體學），適用於農業</div>
+    <div class="deficiency">無技術移轉計畫、無操作指南、無示範驗證</div>
+    <div class="deficiency">缺乏學術產出目標（論文篇數、期刊等級均未填）</div>
+  </div>
+</div>
+
+<!-- ===== 最終總結 ===== -->
+<div class="final-section">
+  <h2>五、待處理事項彙整</h2>
+
+  <table>
+    <tr><th>優先級</th><th>事項</th><th>涉及老師</th></tr>
+    <tr>
+      <td><span class="verdict-no">急迫</span></td>
+      <td>三年計畫書未繳</td>
+      <td><strong>曾志民/林冠瑋</strong>（工項3）、<strong>董東璟</strong>（工項4）、<strong>戴義欽</strong>（工項5）、<strong>林怡君</strong>（工項11）</td>
+    </tr>
+    <tr>
+      <td><span class="verdict-no">急迫</span></td>
+      <td>三年預算未填寫</td>
+      <td><strong>曾志民/林冠瑋</strong>、<strong>董東璟</strong>、<strong>戴義欽</strong>、<strong>林怡君</strong></td>
+    </tr>
+    <tr>
+      <td><span class="verdict-no">急迫</span></td>
+      <td>KPI 量化表格補填</td>
+      <td>幾乎所有老師（張駿暉除外）</td>
+    </tr>
+    <tr>
+      <td><span class="verdict-yes">已完成</span></td>
+      <td>楊道昌計畫書已完整評估（落地性高，75%明確度）</td>
+      <td><strong>楊道昌</strong>（已補繳並分析，KPI量化待補）</td>
+    </tr>
+    <tr>
+      <td><span class="verdict-partial">重要</span></td>
+      <td>定義成果交付機制與技術轉移</td>
+      <td>全體</td>
+    </tr>
+    <tr>
+      <td><span class="verdict-partial">重要</span></td>
+      <td>強化跨工項整合與數據流向</td>
+      <td>全體（特別是工項1楊道昌作為整合平台）</td>
+    </tr>
+  </table>
+
+  
+</div>
+<!-- ===== FINAL VERDICT ===== -->
+<div class="final-section">
+  <h2>整體評估總結</h2>
+
+  <div class="sub-title">一、各老師落地性總覽</div>
+  <table class="verdict-table">
+    <tbody><tr>
+      <th>老師</th>
+      <th>三年成果明確度</th>
+      <th>落地性</th>
+      <th>核心落地方向</th>
+      <th>最大缺陷</th>
+    </tr>
+    <tr>
+      <td>趙慶宇</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill mid" style="width:65%"></div></div><span class="score-label">65%</span></div></td>
+      <td><span class="verdict-yes">高</span></td>
+      <td>堤防填料配方、土方品質分級</td>
+      <td>KPI空白、主軸三至五路徑不清</td>
+    </tr>
+    <tr>
+      <td>郭振民</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill mid" style="width:50%"></div></div><span class="score-label">50%</span></div></td>
+      <td><span class="verdict-partial">中高</span></td>
+      <td>防災應變情境推演、邊界條件供應</td>
+      <td>KPI空白、查核點空白</td>
+    </tr>
+    <tr>
+      <td>張駿暉</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill high" style="width:80%"></div></div><span class="score-label">80%</span></div></td>
+      <td><span class="verdict-yes">中高</span></td>
+      <td>河床沖淤預測、結構物風險評估</td>
+      <td>精度標準未定、部署方式不明</td>
+    </tr>
+    <tr>
+      <td>蔡文柄</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill mid" style="width:55%"></div></div><span class="score-label">55%</span></div></td>
+      <td><span class="verdict-partial">中</span></td>
+      <td>AI多情境推演輔助工具</td>
+      <td>偏研究工具</td>
+    </tr>
+    <tr>
+      <td>許家維</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill mid" style="width:60%"></div></div><span class="score-label">60%</span></div></td>
+      <td><span class="verdict-yes">中高</span></td>
+      <td>疏散儀表板、防災指引地圖</td>
+      <td>KPI空白、維運機制不清</td>
+    </tr>
+    <tr>
+      <td>黃尹則</td>
+      <td><div class="score-bar"><div class="score-track"><div class="score-fill low" style="width:40%"></div></div><span class="score-label">40%</span></div></td>
+      <td><span class="verdict-no">低</span></td>
+      <td>農地復育微生物基線資料庫</td>
+      <td>基礎研究</td>
+    </tr>
+  </tbody></table>
+
+  <div class="sub-title" style="margin-top:24px;">二、共通問題（所有工項）</div>
+  <div class="deficiency"><strong>KPI 量化表格普遍空白</strong>：除趙慶宇（部分）和黃尹則（115年）外，其餘老師的 KPI 欄位均未填寫具體數值</div>
+  <div class="deficiency"><strong>缺乏「技術轉移計畫」</strong>：所有工項均未說明成果如何交付給政府使用單位、誰負責後續維運</div>
+  <div class="deficiency"><strong>工程應用銜接不足</strong>：研究成果到實際工程決策之間的轉化路徑普遍未定義</div>
+
+  <div class="sub-title" style="margin-top:24px;">三、對校長「落地」要求的回應建議</div>
+  <table>
+    <tbody><tr><th>建議方向</th><th>具體行動</th><th>優先級</th></tr>
+    <tr>
+      <td>補充 KPI 量化指標</td>
+      <td>各老師補填 115-117 年度預期效益表，含具體數字、時間點、驗收標準</td>
+      <td><span class="verdict-no">急迫</span></td>
+    </tr>
+    <tr>
+      <td>定義成果交付機制</td>
+      <td>明確每項產出的交付對象（水利署/林保署/地方政府）、格式、驗收流程</td>
+      <td><span class="verdict-no">急迫</span></td>
+    </tr>
+    <tr>
+      <td>新增技術轉移章節</td>
+      <td>每項工項增加「成果推廣與技術移轉計畫」，說明如何讓政府單位實際使用</td>
+      <td><span class="verdict-partial">重要</span></td>
+    </tr>
+    <tr>
+      <td>納入示範驗證計畫</td>
+      <td>選定 1-2 項成果進行實地驗證或試運行，展示實際工程應用效果</td>
+      <td><span class="verdict-partial">重要</span></td>
+    </tr>
+    <tr>
+      <td>強化跨工項整合</td>
+      <td>明確各工項之間的數據流向與銜接時程，避免成果各自獨立無法整合</td>
+      <td><span class="verdict-partial">重要</span></td>
+    </tr>
+  </tbody></table>
+</div>
+</div>
+</body>
+</html>
